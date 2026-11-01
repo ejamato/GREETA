@@ -1,0 +1,17 @@
+:root {
+    --background: #101528;
+    --panel: rgba(20, 27, 49, 0.94);
+
+    --accent: #8bf3c5;
+    --accent-soft: rgba(139, 243, 197, 0.15);
+
+    --text: #f7f2dc;
+    --muted: #a4aac0;
+
+    --border: #566080;
+
+    --pixel-font: "Pixelify Sans", "Courier New", monospace;
+    --body-font: "Pixelify Sans", "Courier New", monospace;
+    --pixel-shadow: 4px 4px 0 #090d19;
+    --transition: 160ms steps(3, end);
+}

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=EJA WebKit Greeter
+Comment=EJA pixel-themed LightDM login
+Exec=/usr/local/lib/eja-lightdm-greeter/greeter.py
+Type=Application
+X-Ubuntu-Gettext-Domain=eja-webkit-greeter

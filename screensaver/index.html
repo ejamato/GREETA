@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="dark" />
+        <title>EJA // Cinnamon Screensaver</title>
+        <link rel="stylesheet" href="assets/css/screensaver.css" />
+    </head>
+    <body>
+        <main class="screen" aria-label="EJA screensaver">
+            <div id="wallpaper" class="wallpaper" aria-hidden="true"></div>
+            <video
+                id="wallpaperVideo"
+                class="wallpaper-video"
+                muted
+                loop
+                playsinline
+                hidden
+                aria-hidden="true"
+            ></video>
+            <div class="shade" aria-hidden="true"></div>
+            <div class="pixel-grid" aria-hidden="true"></div>
+
+            <section class="clock-card" aria-live="off">
+                <div
+                    id="daypartIcon"
+                    class="daypart-icon"
+                    aria-hidden="true"
+                ></div>
+                <p class="eyebrow">EJA <span>//</span> CINNAMON</p>
+                <time id="clock" class="clock" datetime="">--:--</time>
+                <p id="date" class="date"></p>
+                <div class="status-line" aria-hidden="true">
+                    <span></span> SYSTEM LOCKED
+                </div>
+            </section>
+
+            <div class="corner-mark" aria-hidden="true">
+                PIXEL WORLD<br />EST. EJA
+            </div>
+        </main>
+        <script src="assets/js/wallpaper-manifest.js"></script>
+        <script src="assets/js/screensaver.js"></script>
+    </body>
+</html>

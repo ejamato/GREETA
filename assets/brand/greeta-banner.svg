@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title description">
+  <title id="title">GREETA — EJA Pixel Login</title>
+  <desc id="description">A pixel-art banner for the GREETA Linux login greeter.</desc>
+  <rect width="1200" height="300" fill="#080d14"/>
+  <path fill="#14233a" d="M0 0h1200v24H0zm0 276h1200v24H0zM0 24h24v252H0zm1176 0h24v252h-24z"/>
+  <path fill="#36cfff" d="M64 72h24V48h72v24h24v48h-48V96h-24v72h48v-24h-24v-24h72v72h-24v24H88v-24H64z"/>
+  <path fill="#b7c8ff" d="M232 72h24V48h72v24h24v48h-48V96h-24v72h72v48h-96v-24h-24z"/>
+  <path fill="#ffd18a" d="M376 48h120v48h-36v120h-48V96h-36z"/>
+  <path fill="#36cfff" d="M520 216V72h24V48h72v24h24v144h-48v-48h-24v48zm48-96h24V96h-24z"/>
+  <path fill="#b7c8ff" d="M664 72h24V48h72v24h24v48h-48V96h-24v72h72v48h-96v-24h-24z"/>
+  <path fill="#ffd18a" d="M824 72h24V48h72v24h24v144h-48v-48h-24v48h-48zm48 48h24V96h-24z"/>
+  <path fill="#36cfff" d="M968 48h120v48h-36v120h-48V96h-36z"/>
+  <path fill="#516987" d="M1128 48h24v24h-24zm24 24h24v24h-24zm-24 24h24v24h-24z"/>
+  <path fill="#b7c8ff" d="M64 240h1072v4H64z"/>
+  <text x="64" y="270" fill="#b7c8ff" font-family="monospace" font-size="16" letter-spacing="4">PIXEL-INSPIRED LINUX LOGIN EXPERIENCE</text>
+</svg>

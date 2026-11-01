@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+*.py[cod]
+__pycache__/
+
+# Generated Cinnamon package artifacts
+/integration/cinnamon-screensaver/build/
+
+# Local deployment staging
+/_site/

@@ -1,0 +1,255 @@
+--- a/src/monitorView.py
++++ b/src/monitorView.py
+@@ -1,6 +1,16 @@
+ #!/usr/bin/python3
+ 
++import os
++import gi
++
++try:
++    gi.require_version("WebKit2", "4.1")
++    from gi.repository import WebKit2
++except (ImportError, ValueError) as error:
++    WebKit2 = None
++    print("EJA screensaver theme unavailable: %s" % error, flush=True)
++
+ from gi.repository import Gtk, Gio, GLib, GObject
+ import re
+ import cairo
+ import signal
+@@ -33,11 +43,46 @@
+         Queues a new image in the stack, and begins the transition to it.
+         """
++        self.transition_to_widget(image, self.shade_wallpaper)
++
++    def transition_to_theme(self, uri, fallback_image):
++        self.transition_to_image(fallback_image)
++        if WebKit2 is None:
++            return
++
++        view = WebKit2.WebView()
++        view.set_can_focus(False)
++        view.set_sensitive(False)
++        view.set_halign(Gtk.Align.FILL)
++        view.set_valign(Gtk.Align.FILL)
++        view.set_hexpand(True)
++        view.set_vexpand(True)
++        view.get_settings().set_enable_developer_extras(False)
++        view.connect("load-changed", self.on_theme_load_changed)
++        view.connect("load-failed", self.on_theme_load_failed)
++        self.theme_view = view
++        view.load_uri(uri)
++
++    def on_theme_load_changed(self, view, event):
++        if event == WebKit2.LoadEvent.FINISHED:
++            self.transition_to_widget(view, self.shade_eja_wallpaper)
++
++    def on_theme_load_failed(self, view, event, uri, error):
++        print("EJA screensaver theme failed to load %s: %s" % (uri, error), flush=True)
++        return False
++
++    def shade_eja_wallpaper(self, widget, cr):
++        cr.set_source_rgba(0.0, 0.0, 0.0, 0.24)
++        cr.paint()
++        return False
++
++    def transition_to_widget(self, widget, shade_callback):
++        """Queues a widget and crossfades it into the wallpaper stack."""
+-        self.queued = image
++        self.queued = widget
+         self.queued.set_visible(True)
+ 
+-        trackers.con_tracker_get().connect_after(image,
++        trackers.con_tracker_get().connect_after(widget,
+                                                  "draw",
+-                                                 self.shade_wallpaper)
++                                                 shade_callback)
+ 
+         self.add(self.queued)
+ 
+@@ -95,3 +139,16 @@
+ 
+     def set_next_wallpaper_image(self, image):
+-        self.wallpaper_stack.transition_to_image(image)
++        theme_path = os.path.join(
++            GLib.get_user_data_dir(),
++            "eja-cinnamon-screensaver",
++            "index.html",
++        )
++        if WebKit2 is not None and os.path.isfile(theme_path):
++            if not getattr(self, "eja_theme_loaded", False):
++                self.eja_theme_loaded = True
++                self.wallpaper_stack.transition_to_theme(
++                    GLib.filename_to_uri(theme_path, None),
++                    image,
++                )
++            return
++        self.wallpaper_stack.transition_to_image(image)
+--- a/src/unlock.py
++++ b/src/unlock.py
+@@ -69,7 +69,7 @@
+ 
+         self.entry_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.CENTER)
+ 
+-        self.box.pack_start(self.entry_box, True, True, 2)
++        self.box.pack_start(self.entry_box, False, False, 2)
+ 
+         self.password_entry = PasswordEntry()
+ 
+--- a/src/cinnamon-screensaver.css
++++ b/src/cinnamon-screensaver.css
+@@ -2,6 +2,11 @@
+ }
+ 
+ .csstage .unlockbox {
++    font-family: "Pixelify Sans";
++    background-image: none;
++    background-color: rgba(16, 21, 40, .9);
++    border: 1px solid rgba(139, 243, 197, .55);
++    padding: 18px;
+     color: #eeeeee;
+     font-size: 20px;
+     text-shadow: 1px 1px alpha(black, 0.8);
+@@ -11,4 +16,5 @@
+ .csstage .clock {
++    font-family: "Pixelify Sans";
+     color: #eeeeee;
+     text-shadow: 1px 1px alpha(black, 0.8);
+ }
+@@ -23,6 +28,8 @@
+ 
+ .csstage .audiopanel {
+     border-width: 0 1px 1px 0;
+-    border-radius: 0 0 3px 0;
+-    background-color: rgba(255, 255, 255, .05);
++    border-radius: 0;
++    border-style: solid;
++    border-color: rgba(139, 243, 197, .42);
++    background-color: rgba(16, 21, 40, .88);
+ }
+@@ -64,13 +72,16 @@
+ }
+ 
+ .csstage .passwordentry {
++    font-family: "Pixelify Sans";
+     font-size: 15px;
+     box-shadow: none;
+-    border-color: alpha(white, .2);
++    border-color: rgba(139, 243, 197, .5);
+     border-style: solid;
+-    color: white;
++    color: #f7f2dc;
+     background-image: none;
+-    background-color: rgba(0, 0, 0, .6);
++    background-color: rgba(16, 21, 40, .94);
+     border-image: none;
+     border-width: 1px;
++    border-radius: 0;
++    -gtk-outline-radius: 0;
+     box-shadow: none;
+@@ -102,14 +113,14 @@
+ .csstage .transparentbutton {
+     -gtk-icon-style: requested;
+-    border-color: alpha(white, .2);
++    border-color: rgba(139, 243, 197, .42);
+     border-image: none;
+-    box-shadow: none;
++    box-shadow: 2px 2px 0 rgba(5, 8, 17, .7);
+     background-image: none;
+-    background-color: rgba(0, 0, 0, .6);
+-    border-radius: 20px;
+-    -gtk-outline-radius: 20px;
++    background-color: rgba(16, 21, 40, .82);
++    border-radius: 0;
++    -gtk-outline-radius: 0;
+     outline-color: transparent;
+-    color: alpha(white, .7);
++    color: #f7f2dc;
+     border-width: 1px;
+     padding: 4px;
+ }
+@@ -117,8 +128,8 @@
+ .csstage .transparentbutton image {
+-    color: alpha(white, .7);
++    color: #8bf3c5;
+ }
+ 
+ .csstage .transparentbutton:disabled image {
+-    color: #333333;
++    color: #566080;
+ }
+
+@@ -124,5 +135,5 @@
+ .csstage .passwordentry:focus,
+ .csstage .transparentbutton:focus {
+-    border-color: @theme_selected_bg_color;
++    border-color: rgba(139, 243, 197, .92);
+     box-shadow: 1px 1px alpha(white, 0.1);
+ }
+@@ -130,24 +141,21 @@
+ .csstage .passwordentry:hover,
+ .csstage .transparentbutton:hover {
+-    border-color: alpha(white, .2);
+-    background-color: alpha(grey, .2);
+-    box-shadow: 1px 1px alpha(white, 0.1);
++    border-color: rgba(139, 243, 197, .72);
++    background-color: rgba(31, 41, 69, .94);
++    box-shadow: 2px 2px 0 rgba(5, 8, 17, .7);
+ }
+ 
+ .csstage .passwordentry:hover:focus,
+ .csstage .transparentbutton:hover:focus {
+-    border-color: @theme_selected_bg_color;
+     box-shadow: 1px 1px alpha(white, 0.1);
+ }
+ 
+ .csstage .passwordentry:active,
+ .csstage .transparentbutton:active {
+-    border-color: @theme_selected_bg_color;
+     box-shadow: 1px 1px alpha(white, 0.1);
+ }
+ 
+ .csstage .passwordentry:active:focus,
+ .csstage .transparentbutton:active:focus {
+-    border-color: @theme_selected_bg_color;
+     box-shadow: 1px 1px alpha(white, 0.1);
+ }
+@@ -173,15 +181,15 @@
+ .csstage .trackname {
+-    font-family: ubuntu;
++    font-family: "Pixelify Sans";
+     font-size: 14px;
+     text-shadow: 1px 1px alpha(black, 0.8);
+     background-image: none;
+     background-color: transparent;
+ }
+ 
+ .csstage .albumartist {
+-    font-family: ubuntu;
++    font-family: "Pixelify Sans";
+     font-size: 10px;
+     text-shadow: 1px 1px alpha(black, 0.8);
+     background-image: none;
+     background-color: transparent;
+ }
+@@ -248,1 +256,11 @@
+ }
++.csstage .passwordentry:focus,
++.csstage .transparentbutton:focus,
++.csstage .passwordentry:hover:focus,
++.csstage .transparentbutton:hover:focus,
++.csstage .passwordentry:active,
++.csstage .transparentbutton:active,
++.csstage .passwordentry:active:focus,
++.csstage .transparentbutton:active:focus {
++    border-color: rgba(139, 243, 197, .92);
++}
+--- a/debian/control
++++ b/debian/control
+@@ -31,6 +31,7 @@
+  gir1.2-pango-1.0,
+  gir1.2-xapp-1.0,
++ gir1.2-webkit2-4.1,
+  iso-flag-png,
+  libxdo3,
+  python3,

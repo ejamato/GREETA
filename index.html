@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GREETA | EJA Login</title>
+
+        <link rel="stylesheet" href="assets/css/fonts.css" />
+        <link rel="stylesheet" href="assets/css/variables.css" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/animations.css" />
+        <link rel="stylesheet" href="assets/css/pixel-mates.css" />
+        <link rel="stylesheet" href="assets/css/ambience.css" />
+        <link rel="stylesheet" href="assets/css/media-island.css" />
+    </head>
+    <body>
+        <div class="wallpaper">
+            <video
+                id="wallpaperVideo"
+                aria-hidden="true"
+                muted
+                loop
+                playsinline
+                hidden
+            ></video>
+        </div>
+        <div class="overlay"></div>
+        <div class="grid-overlay"></div>
+        <canvas
+            id="ambienceCanvas"
+            class="ambience-canvas"
+            aria-hidden="true"
+        ></canvas>
+        <canvas
+            id="worldCanvas"
+            class="pixel-mates-canvas"
+            aria-label="Pixel Mates autonomous characters"
+        ></canvas>
+
+        <div
+            id="daytimeIcon"
+            class="daytime-icon"
+            data-daypart="night"
+            role="img"
+            aria-label="Malam"
+        >
+            <svg
+                class="daytime-icon-sunrise"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                shape-rendering="crispEdges"
+            >
+                <path
+                    d="M7 2h2v2H7zm-3 3h2v2H4zm7 0h2v2h-2zM2 8h2v2H2zm10 0h2v2h-2zM6 7h4v1h1v3H5V8h1zM1 12h14v2H1z"
+                    fill="currentColor"
+                />
+                <path d="M3 10h10v1H3z" fill="#101528" />
+            </svg>
+            <svg
+                class="daytime-icon-noon"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                shape-rendering="crispEdges"
+            >
+                <path
+                    d="M6 1h4v2h2v2h2v6h-2v2h-2v2H6v-2H4v-2H2V5h2V3h2zM7 5h2v2H7zm0 4h2v2H7z"
+                    fill="currentColor"
+                />
+                <path
+                    d="M1 7h2v2H1zm12 0h2v2h-2zM7 1h2v2H7zm0 12h2v2H7z"
+                    fill="currentColor"
+                />
+            </svg>
+            <svg
+                class="daytime-icon-sunset"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                shape-rendering="crispEdges"
+            >
+                <path
+                    d="M7 2h2v2H7zm-3 3h2v2H4zm7 0h2v2h-2zM2 8h2v2H2zm10 0h2v2h-2zM6 7h4v1h1v3H5V8h1zM1 12h14v2H1z"
+                    fill="currentColor"
+                />
+                <path d="M3 10h10v1H3z" fill="#101528" />
+                <path d="M1 14h14v1H1z" fill="currentColor" />
+            </svg>
+            <svg
+                class="daytime-icon-moon"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+                shape-rendering="crispEdges"
+            >
+                <path
+                    d="M9 1h3v2h2v3h1v5h-2v2h-3v2H5v-2H3v-3H2V6h2V4h2V2h3zM8 3H6v2H4v4h2v2h4v-2h2V6h-2V4H8z"
+                    fill="currentColor"
+                />
+                <path d="M12 2h2v2h-2zM2 12h2v2H2z" fill="currentColor" />
+            </svg>
+        </div>
+
+        <section
+            id="mediaIsland"
+            class="media-island"
+            aria-label="Pemutar media"
+            aria-live="polite"
+            hidden
+        >
+            <div class="media-island-art" aria-hidden="true">
+                <svg viewBox="0 0 16 16" shape-rendering="crispEdges">
+                    <path d="M2 2h12v12H2z" fill="currentColor" />
+                    <path d="M5 5h2v6H5zm4 0h2v6H9z" fill="#101528" />
+                </svg>
+            </div>
+            <div class="media-island-info">
+                <span class="media-island-eyebrow">NOW PLAYING</span>
+                <strong id="mediaTitle">Media</strong>
+                <span id="mediaArtist">EJA PLAYER</span>
+            </div>
+            <div class="media-island-controls">
+                <button
+                    id="mediaPrevious"
+                    type="button"
+                    aria-label="Media sebelumnya"
+                    title="Sebelumnya"
+                    hidden
+                >
+                    <svg
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                        shape-rendering="crispEdges"
+                    >
+                        <path
+                            d="M3 2h2v12H3zm10 1v10L5 8z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                </button>
+                <button
+                    id="mediaPlayPause"
+                    type="button"
+                    aria-label="Putar media"
+                    title="Putar"
+                >
+                    <svg
+                        class="media-play-icon"
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                        shape-rendering="crispEdges"
+                    >
+                        <path
+                            d="M4 2h3v12H4zm5 0 5 6-5 6z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                    <svg
+                        class="media-pause-icon"
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                        shape-rendering="crispEdges"
+                    >
+                        <path
+                            d="M3 2h4v12H3zm6 0h4v12H9z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                </button>
+                <button
+                    id="mediaNext"
+                    type="button"
+                    aria-label="Media berikutnya"
+                    title="Berikutnya"
+                    hidden
+                >
+                    <svg
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                        shape-rendering="crispEdges"
+                    >
+                        <path
+                            d="M11 2h2v12h-2zM3 3v10l8-5z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <div
+            id="ambienceCaption"
+            class="ambience-caption"
+            hidden
+            aria-live="polite"
+        >
+            <h2 id="ambienceTitle"></h2>
+            <p id="ambienceSubtitle"></p>
+        </div>
+
+        <section
+            id="ambiencePanel"
+            class="ambience-panel"
+            aria-label="Pengaturan suasana"
+            hidden
+        >
+            <header class="ambience-panel-header">
+                <div>
+                    <span class="ambience-eyebrow">EJA // AMBIENCE</span>
+                    <h2>PILIH SUASANA</h2>
+                </div>
+                <button
+                    id="ambienceClose"
+                    class="ambience-close"
+                    type="button"
+                    aria-label="Tutup pengaturan"
+                >
+                    X
+                </button>
+            </header>
+
+            <div
+                class="ambience-mode-grid"
+                role="group"
+                aria-label="Mode suasana"
+            >
+                <button
+                    class="ambience-mode"
+                    type="button"
+                    data-weather-mode="rain"
+                    aria-pressed="false"
+                >
+                    <span class="ambience-mode-icon" aria-hidden="true"
+                        >///</span
+                    ><span>HUJAN</span>
+                </button>
+                <button
+                    class="ambience-mode is-active"
+                    type="button"
+                    data-weather-mode="autumn"
+                    aria-pressed="true"
+                >
+                    <span class="ambience-mode-icon" aria-hidden="true"
+                        >*v*</span
+                    ><span>GUGUR</span>
+                </button>
+                <button
+                    class="ambience-mode"
+                    type="button"
+                    data-weather-mode="snow"
+                    aria-pressed="false"
+                >
+                    <span class="ambience-mode-icon" aria-hidden="true">+</span
+                    ><span>SALJU</span>
+                </button>
+                <button
+                    class="ambience-mode"
+                    type="button"
+                    data-weather-mode="mix"
+                    aria-pressed="false"
+                >
+                    <span class="ambience-mode-icon" aria-hidden="true"
+                        >***</span
+                    ><span>HARMONI</span>
+                </button>
+            </div>
+
+            <div class="daypart-section">
+                <div class="ambience-subheading">WAKTU HARI</div>
+                <button
+                    id="daypartAuto"
+                    class="daypart-auto is-active"
+                    type="button"
+                    aria-pressed="true"
+                >
+                    <span
+                        class="daypart-auto-indicator"
+                        aria-hidden="true"
+                    ></span>
+                    <span>AUTO <small>IKUTI JAM PERANGKAT</small></span>
+                </button>
+                <div
+                    class="daypart-grid"
+                    role="group"
+                    aria-label="Pilih waktu hari"
+                >
+                    <button
+                        class="daypart-button"
+                        type="button"
+                        data-daypart="morning"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true">DAWN</span><span>PAGI</span>
+                    </button>
+                    <button
+                        class="daypart-button"
+                        type="button"
+                        data-daypart="day"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true">NOON</span><span>SIANG</span>
+                    </button>
+                    <button
+                        class="daypart-button"
+                        type="button"
+                        data-daypart="afternoon"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true">DUSK</span><span>SORE</span>
+                    </button>
+                    <button
+                        class="daypart-button"
+                        type="button"
+                        data-daypart="night"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true">NITE</span><span>MALAM</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="theme-section">
+                <div class="ambience-subheading">WARNA TEMA</div>
+                <button
+                    id="themeAuto"
+                    class="theme-auto is-active"
+                    type="button"
+                    aria-pressed="true"
+                >
+                    <span
+                        class="daypart-auto-indicator"
+                        aria-hidden="true"
+                    ></span>
+                    <span>AUTO IKUTI WAKTU</span>
+                </button>
+                <label class="theme-custom" for="themeColor">
+                    <span>WARNA PILIHAN</span>
+                    <input
+                        id="themeColor"
+                        type="color"
+                        value="#ffd18a"
+                        aria-label="Pilih warna tema"
+                    />
+                </label>
+            </div>
+
+            <div class="wallpaper-section">
+                <div class="ambience-subheading">WALLPAPER</div>
+                <button
+                    class="wallpaper-auto"
+                    type="button"
+                    data-wallpaper="auto"
+                    aria-pressed="true"
+                >
+                    <span class="wallpaper-auto-icon" aria-hidden="true"
+                        >AUTO</span
+                    >
+                    <span>SESUAI JAM</span>
+                </button>
+                <div
+                    id="wallpaperGrid"
+                    class="wallpaper-grid"
+                    role="group"
+                    aria-label="Pilih wallpaper tetap"
+                ></div>
+            </div>
+
+            <div class="ambience-settings">
+                <label class="ambience-range-field" for="ambienceDensity">
+                    <span
+                        ><span>KEPADATAN PARTIKEL</span
+                        ><output id="ambienceDensityValue" for="ambienceDensity"
+                            >38</output
+                        ></span
+                    >
+                    <input
+                        id="ambienceDensity"
+                        type="range"
+                        min="15"
+                        max="75"
+                        value="38"
+                    />
+                </label>
+                <label class="ambience-range-field" for="ambienceWind">
+                    <span
+                        ><span>HEMBUSAN ANGIN</span
+                        ><output id="ambienceWindValue" for="ambienceWind"
+                            >TENANG</output
+                        ></span
+                    >
+                    <input
+                        id="ambienceWind"
+                        type="range"
+                        min="-15"
+                        max="15"
+                        value="4"
+                    />
+                </label>
+                <div class="ambience-text-row">
+                    <span>TAMPILKAN TEKS SUASANA</span>
+                    <button
+                        id="ambienceTextToggle"
+                        class="ambience-switch"
+                        type="button"
+                        aria-label="Tampilkan teks suasana"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <main class="login-screen">
+            <header class="system-info" aria-label="System information">
+                <div>
+                    <span>SESSION</span>
+                    <strong id="session">CINNAMON</strong>
+                </div>
+                <div>
+                    <span>VERSION</span>
+                    <strong>EJA 1.0</strong>
+                </div>
+            </header>
+
+            <section class="clock" aria-label="Current date and time">
+                <div id="date">Loading date...</div>
+                <div id="time">00:00</div>
+            </section>
+
+            <section class="login-panel">
+                <h1 id="username">Welcome back</h1>
+
+                <div class="host-name">
+                    <span>HOST</span>
+                    <strong id="hostname">LOCALHOST</strong>
+                </div>
+
+                <form id="login-form">
+                    <label class="username-field" for="login-user">
+                        <span>USER</span>
+                        <input
+                            id="login-user"
+                            name="username"
+                            type="text"
+                            readonly
+                            autocomplete="username"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            required
+                            aria-label="Username"
+                        />
+                    </label>
+                    <div class="password-field">
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            autocomplete="off"
+                            autofocus
+                            aria-describedby="auth-message"
+                        />
+                        <span
+                            class="password-loading"
+                            aria-hidden="true"
+                            hidden
+                        ></span>
+                    </div>
+
+                    <button id="login-button" type="submit">
+                        UNLOCK SYSTEM
+                    </button>
+                </form>
+            </section>
+
+            <p
+                id="auth-message"
+                class="auth-message"
+                role="status"
+                aria-live="polite"
+            ></p>
+
+            <nav
+                class="system-controls"
+                aria-label="System controls and power actions"
+            >
+                <div class="power-actions">
+                    <button
+                        id="ambienceToggle"
+                        class="ambience-launcher"
+                        type="button"
+                        aria-label="Buka pengaturan Suasana"
+                        data-tooltip="Pengaturan Suasana"
+                        aria-expanded="false"
+                        aria-controls="ambiencePanel"
+                    >
+                        <svg
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                            shape-rendering="crispEdges"
+                        >
+                            <path
+                                d="M6 1h4v2h2v2h2v6h-2v2h-2v2H6v-2H4v-2H2V5h2V3h2zM7 5h2v2H7zm0 4h2v2H7z"
+                                fill="currentColor"
+                            />
+                            <path d="M5 6h2v2H5zm4 0h2v2H9z" fill="#101528" />
+                        </svg>
+                    </button>
+                    <button
+                        id="openMatesBtn"
+                        class="mates-launcher"
+                        type="button"
+                        aria-label="Open Pixel Mates controls"
+                        data-tooltip="Pixel Mates"
+                        aria-expanded="false"
+                        aria-controls="hudContainer"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M5 6h3V3h3v3h5V3h3v3h3v12h-3v3h-3v-3h-5v3H8v-3H5z"
+                                fill="currentColor"
+                                shape-rendering="crispEdges"
+                            />
+                            <path
+                                d="M8 9h3v3H8zm6 0h3v3h-3zm-4 5h4v2h-4z"
+                                fill="#101528"
+                                shape-rendering="crispEdges"
+                            />
+                            <path
+                                d="M2 9h3v6H2zm17 0h3v6h-3z"
+                                fill="currentColor"
+                                shape-rendering="crispEdges"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        class="power-action"
+                        type="button"
+                        data-system-action="suspend"
+                        aria-label="Suspend"
+                        data-tooltip="Suspend"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M8 3h3v3H8zm-3 3h3v3H5zm-2 3h3v7h3v3h7v3H8v-3H5v-3H3zM8 16h3v3H8zm3 3h5v3h-5zm5-1h3v-3h3v4h-3v3h-5v-3h2zM16 3h3v3h-3zm3 3h3v3h-3zm-3 3h6v3h-6z"
+                                fill="currentColor"
+                                shape-rendering="crispEdges"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        class="power-action"
+                        type="button"
+                        data-system-action="reboot"
+                        aria-label="Reboot"
+                        data-tooltip="Reboot"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M10 2h4v3h-4zm4 3h4v3h-4zm4 3h3v4h-3zm-2 4h5v4h-3v3h-3v3h-6v-3h5v-3h3v-3h2zM5 6h5v3H7v3H4v6h3v3h7v3H7v-2H4v-3H2v-8h2V8h1z"
+                                fill="currentColor"
+                                shape-rendering="crispEdges"
+                            />
+                        </svg>
+                    </button>
+                    <button
+                        class="power-action power-action--shutdown"
+                        type="button"
+                        data-system-action="shutdown"
+                        aria-label="Shutdown"
+                        data-tooltip="Shutdown"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M10 2h4v10h-4zM5 5h4v3H7v2H4v7h3v3h10v-3h3v-7h-3V8h-2V5h4v3h3v3h2v7h-2v3h-3v2H7v-2H4v-3H2v-7h2V8h3z"
+                                fill="currentColor"
+                                shape-rendering="crispEdges"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </main>
+
+        <aside
+            id="hudContainer"
+            class="pixel-mates-hud"
+            aria-label="Pixel Mates controls"
+            hidden
+        >
+            <header class="mates-hud-header">
+                <h2>PIXEL.MATES // OS</h2>
+                <div class="mates-hud-tools">
+                    <span id="fpsCounter" class="mates-fps">-- FPS</span>
+                    <button
+                        id="toggleHudBtn"
+                        class="mates-button mates-minimize"
+                        type="button"
+                        aria-label="Minimize controls"
+                    >
+                        [-]
+                    </button>
+                    <button
+                        id="closeMatesBtn"
+                        class="mates-button mates-minimize"
+                        type="button"
+                        aria-label="Close controls"
+                    >
+                        [x]
+                    </button>
+                </div>
+            </header>
+
+            <div id="hudContent" class="mates-hud-content">
+                <section class="mates-section">
+                    <div class="mates-section-heading">
+                        <span>PILIH ARCHETYPE</span>
+                        <span id="charCountBadge">[3 AKTIF]</span>
+                    </div>
+                    <div class="mates-type-grid">
+                        <button
+                            data-type="NEKO"
+                            class="mates-button type-select-btn active-type"
+                            type="button"
+                            aria-pressed="true"
+                        >
+                            <strong>NEKO</strong><span>Kucing</span>
+                        </button>
+                        <button
+                            data-type="BOT"
+                            class="mates-button type-select-btn"
+                            type="button"
+                            aria-pressed="false"
+                        >
+                            <strong>BEEP</strong><span>Robot</span>
+                        </button>
+                        <button
+                            data-type="MOCHI"
+                            class="mates-button type-select-btn"
+                            type="button"
+                            aria-pressed="false"
+                        >
+                            <strong>MOCHI</strong><span>Roh / Slime</span>
+                        </button>
+                    </div>
+                    <div class="mates-action-grid">
+                        <button
+                            id="spawnBtn"
+                            class="mates-button mates-positive"
+                            type="button"
+                        >
+                            + Tambah karakter
+                        </button>
+                        <button
+                            id="removeBtn"
+                            class="mates-button mates-negative"
+                            type="button"
+                        >
+                            - Hapus terakhir
+                        </button>
+                    </div>
+                </section>
+
+                <section class="mates-section">
+                    <div class="mates-section-heading">PERINTAH GLOBAL AI</div>
+                    <div class="mates-command-grid">
+                        <button
+                            id="cmdWalkBtn"
+                            class="mates-button"
+                            type="button"
+                        >
+                            [&gt;] Semua jalan
+                        </button>
+                        <button
+                            id="cmdSitBtn"
+                            class="mates-button"
+                            type="button"
+                        >
+                            [_] Semua duduk
+                        </button>
+                        <button
+                            id="cmdHangBtn"
+                            class="mates-button"
+                            type="button"
+                        >
+                            [^] Bergelantungan
+                        </button>
+                        <button
+                            id="cmdClimbBtn"
+                            class="mates-button"
+                            type="button"
+                        >
+                            [|] Panjat dinding
+                        </button>
+                        <button
+                            id="cmdJumpBtn"
+                            class="mates-button"
+                            type="button"
+                        >
+                            [*] Lompat ceria
+                        </button>
+                        <button
+                            id="toggleLedgesBtn"
+                            class="mates-button is-selected"
+                            type="button"
+                            aria-pressed="true"
+                        >
+                            [=] Pijakan: ON
+                        </button>
+                    </div>
+                </section>
+
+                <section class="mates-section mates-status-section">
+                    <div class="mates-section-heading">
+                        <span>STATUS AI REAL-TIME</span>
+                        <span>KLIK / TARIK MATE</span>
+                    </div>
+                    <div
+                        id="stateLogList"
+                        class="mates-state-log"
+                        aria-live="polite"
+                    ></div>
+                </section>
+            </div>
+        </aside>
+
+        <script src="assets/js/eja-settings.js"></script>
+        <script src="assets/js/clock.js"></script>
+        <script src="assets/js/animation.js"></script>
+        <script src="assets/js/system.js"></script>
+        <script src="assets/js/auth.js"></script>
+        <script src="assets/js/pixel-mates.js"></script>
+        <script src="assets/js/ambience.js"></script>
+        <script src="assets/js/media-island.js"></script>
+    </body>
+</html>

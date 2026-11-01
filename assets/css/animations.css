@@ -1,0 +1,115 @@
+.login-panel,
+.clock,
+.system-info,
+.system-controls {
+    opacity: 0;
+    animation: fade-up 900ms ease forwards;
+}
+
+.clock {
+    animation-delay: 150ms;
+}
+
+.login-panel {
+    animation-delay: 300ms;
+}
+
+.system-controls {
+    animation-delay: 450ms;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes input-focus {
+    0% {
+        transform: translateY(2px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes button-click {
+    50% {
+        transform: translate(3px, 3px);
+        box-shadow: 1px 1px 0 #090d19;
+    }
+}
+
+button.is-clicked {
+    animation: button-click 0.18s steps(3, end);
+}
+
+@keyframes pixel-spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+@keyframes message-enter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 10px)) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes message-exit {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% - 8px)) scale(0.97);
+    }
+}
+
+@keyframes message-error-enter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 8px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+}
+
+@keyframes message-error-exit {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, 8px) scale(0.97);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,131 @@
+.csstage .unlockbox {
+    font-family: "Pixelify Sans";
+    color: #fff9e8;
+    background-image: none;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    text-shadow: 2px 2px rgba(16, 21, 40, 0.9);
+}
+
+.csstage .audiopanel {
+    background-image: none;
+    background-color: rgba(247, 242, 220, 0.94);
+    border: 2px solid rgba(37, 112, 99, 0.9);
+    border-radius: 0;
+    padding: 7px;
+    box-shadow: 3px 3px 0 rgba(16, 21, 40, 0.5);
+}
+
+.csstage .passwordentry {
+    font-family: "Pixelify Sans";
+    color: #17233c;
+    background-image: none;
+    background-color: rgba(247, 242, 220, 0.96);
+    border: 2px solid rgba(37, 112, 99, 0.85);
+    border-radius: 0;
+    -gtk-outline-radius: 0;
+    padding: 9px 12px;
+    box-shadow: 3px 3px 0 rgba(16, 21, 40, 0.45);
+}
+
+.csstage .passwordentry:focus {
+    color: #17233c;
+    background-color: #fff9e8;
+    border-color: #55d9ad;
+    box-shadow: 3px 3px 0 rgba(16, 21, 40, 0.55);
+}
+
+.csstage .passwordentry progress {
+    border-color: #55d9ad;
+}
+
+.csstage .passwordentry:backdrop {
+    color: #237b68;
+}
+
+.csstage .transparentbutton {
+    color: #17233c;
+    background-image: none;
+    background-color: rgba(139, 243, 197, 0.94);
+    border: 2px solid rgba(37, 112, 99, 0.9);
+    border-radius: 0;
+    -gtk-outline-radius: 0;
+    padding: 6px;
+    box-shadow: 2px 2px 0 rgba(16, 21, 40, 0.45);
+}
+
+.csstage .transparentbutton image {
+    color: #174e4b;
+}
+
+.csstage .transparentbutton:disabled {
+    background-color: rgba(220, 222, 208, 0.88);
+    border-color: rgba(76, 100, 100, 0.45);
+    box-shadow: none;
+}
+
+.csstage .transparentbutton:disabled image {
+    color: #71817c;
+}
+
+.csstage .passwordentry:hover,
+.csstage .transparentbutton:hover {
+    background-color: #fff9e8;
+    border-color: #55d9ad;
+}
+
+.csstage .passwordentry:focus,
+.csstage .transparentbutton:focus,
+.csstage .passwordentry:hover:focus,
+.csstage .transparentbutton:hover:focus,
+.csstage .passwordentry:active,
+.csstage .transparentbutton:active,
+.csstage .passwordentry:active:focus,
+.csstage .transparentbutton:active:focus {
+    border-color: #55d9ad;
+}
+
+.csstage .volumeslider {
+    background-color: rgba(23, 78, 75, 0.2);
+    color: #32b88d;
+    border: 1px solid rgba(37, 112, 99, 0.55);
+    padding: 4px;
+}
+
+.csstage scale.volumeslider slider {
+    min-width: 12px;
+    min-height: 12px;
+    background-image: none;
+    background-color: #fff9e8;
+    border: 2px solid #237b68;
+    border-radius: 0;
+    -gtk-outline-radius: 0;
+}
+
+.csstage .volumeslider:disabled {
+    background-color: rgba(76, 100, 100, 0.16);
+    color: #82948c;
+}
+
+.csstage .trackname {
+    font-family: "Pixelify Sans";
+    color: #17233c;
+    text-shadow: none;
+}
+
+.csstage .albumartist {
+    font-family: "Pixelify Sans";
+    color: #426d69;
+    text-shadow: none;
+}
+
+.csstage .auth-message {
+    color: #ffb4a2;
+    text-shadow: 1px 1px rgba(16, 21, 40, 0.9);
+}
+
+.csstage .caps-message {
+    color: #ffe28a;
+    text-shadow: 1px 1px rgba(16, 21, 40, 0.9);
+}

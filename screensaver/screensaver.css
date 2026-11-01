@@ -1,0 +1,229 @@
+@font-face {
+    font-family: "Pixelify Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/pixelify-sans-400.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Pixelify Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("../fonts/pixelify-sans-500.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Pixelify Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/pixelify-sans-600.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Pixelify Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../fonts/pixelify-sans-700.ttf") format("truetype");
+}
+
+:root {
+    color-scheme: dark;
+    --accent: #8bf3c5;
+    --ink: #101528;
+    --text: #f7f2dc;
+    --muted: #a4aac0;
+    font-family: "Pixelify Sans", "Courier New", monospace;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html,
+body,
+.screen {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--ink);
+}
+
+.screen {
+    position: relative;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+    color: var(--text);
+}
+
+.wallpaper,
+.wallpaper-video,
+.shade,
+.pixel-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wallpaper {
+    z-index: -4;
+    background: center / cover no-repeat url("../images/home.jpg");
+    image-rendering: pixelated;
+    transform: scale(1.015);
+}
+
+.wallpaper-video {
+    z-index: -4;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.wallpaper-video[hidden] {
+    display: none;
+}
+
+.shade {
+    z-index: -3;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7, 11, 24, 0.45),
+            rgba(7, 11, 24, 0.08) 55%,
+            rgba(7, 11, 24, 0.34)
+        ),
+        linear-gradient(
+            0deg,
+            rgba(7, 11, 24, 0.58),
+            transparent 50%,
+            rgba(7, 11, 24, 0.26)
+        );
+}
+
+.pixel-grid {
+    z-index: -2;
+    opacity: 0.22;
+    background-image:
+        linear-gradient(rgba(222, 239, 255, 0.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(222, 239, 255, 0.13) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(90deg, transparent, #000 45%, #000);
+}
+
+.clock-card {
+    width: min(660px, calc(100vw - 48px));
+    padding: clamp(24px, 5vw, 56px);
+    text-align: center;
+}
+
+.daypart-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 15px;
+    color: var(--accent);
+}
+
+.daypart-icon svg {
+    width: 100%;
+    height: 100%;
+    shape-rendering: crispEdges;
+}
+
+.eyebrow {
+    margin: 0 0 16px;
+    color: var(--accent);
+    font-size: clamp(10px, 1.4vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}
+
+.eyebrow span {
+    padding: 0 0.45em;
+    color: var(--muted);
+}
+
+.clock {
+    display: block;
+    color: var(--text);
+    font-size: clamp(64px, 15vw, 142px);
+    font-weight: 700;
+    letter-spacing: -0.075em;
+    line-height: 0.95;
+    text-shadow: 5px 5px 0 rgba(12, 16, 32, 0.78);
+    font-variant-numeric: tabular-nums;
+}
+
+.date {
+    margin: 20px 0 0;
+    color: var(--muted);
+    font-size: clamp(13px, 2vw, 18px);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.status-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 30px;
+    padding: 8px 12px;
+    color: var(--text);
+    border-radius: 10px;
+    background: rgba(4, 8, 18, 0.46);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+}
+
+.status-line span {
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+.corner-mark {
+    position: absolute;
+    right: clamp(18px, 3vw, 36px);
+    bottom: clamp(16px, 3vh, 30px);
+    color: rgba(255, 248, 223, 0.65);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    line-height: 1.7;
+    text-align: right;
+}
+
+@media (max-width: 520px) {
+    .clock-card {
+        width: calc(100vw - 32px);
+        padding: 28px 16px;
+    }
+
+    .pixel-grid {
+        background-size: 24px 24px;
+    }
+
+    .corner-mark {
+        font-size: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

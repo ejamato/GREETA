@@ -1,0 +1,21 @@
+{
+  "name": "GREETA | EJA THEME",
+  "version": "1.0.0",
+  "appearance": {
+    "accent": "#36cfff",
+    "background": "#080d14",
+    "clockFormat": "24h",
+    "language": "id-ID"
+  },
+  "wallpaper": {
+    "default": "default.webp",
+    "allowRotation": false
+  },
+  "animation": {
+    "enabled": true,
+    "duration": 900
+  },
+  "session": {
+    "default": "cinnamon"
+  }
+}
