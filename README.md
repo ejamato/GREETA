@@ -88,29 +88,38 @@ Run the safe login smoke test:
 /usr/bin/python3 integration/lightdm-webkit-greeter/greeter.py --preview --smoke-test
 ```
 
-Install EJA for the **next LightDM start**:
+From the project directory, run:
 
 ```sh
-pkexec "$PWD/integration/lightdm-webkit-greeter/install.sh"
+./install.sh
 ```
 
-You can run the installer from any working directory by using its full path:
+Or run the project installer by its full path from any working directory:
 
 ```sh
-pkexec "$HOME/projects/eja-login/integration/lightdm-webkit-greeter/install.sh"
+"$HOME/projects/GREETA/install.sh"
 ```
 
-If you cloned GREETA to a different location, replace that path with the
-location of your `install.sh`.
+This example assumes the repository is cloned to `$HOME/projects/GREETA`. If
+your clone is elsewhere, use its actual `install.sh` path. The script locates
+the project files relative to itself and requests administrator permission
+with `pkexec`; no directory changes or file edits are required.
 
-The installer does not restart LightDM. Save your work before logging out or
-restarting. If you need to roll back, use a text console and run:
+The installer checks for the required LightDM and WebKitGTK Python bindings,
+copies the greeter and theme into system locations, adds the `lightdm` account
+to available `render` and `video` groups, and selects EJA for the next LightDM
+start. It does **not** install missing system packages or restart LightDM.
+Save your work before logging out or restarting.
+
+To roll back, run the matching uninstall script from any directory:
 
 ```sh
-pkexec "$HOME/path/to/GREETA/integration/lightdm-webkit-greeter/uninstall.sh"
+"$HOME/projects/GREETA/uninstall.sh"
 ```
 
-The original greeter package remains installed. See the
+The original greeter package remains installed. If you cannot access your
+desktop, switch to a text console with `Ctrl`+`Alt`+`F2`, sign in, and run the
+uninstall command using the actual path to your GREETA clone. See the
 [LightDM integration guide](integration/lightdm-webkit-greeter/README.md) for
 details and recovery steps.
 
@@ -142,6 +151,8 @@ GREETA/
 ├── screensaver/     # Cinnamon Screensaver web assets
 ├── CHANGELOG.md
 ├── LICENSE
+├── install.sh       # Root-level LightDM installer entry point
+├── uninstall.sh     # Root-level LightDM rollback entry point
 ├── VERSION
 └── index.html
 ```

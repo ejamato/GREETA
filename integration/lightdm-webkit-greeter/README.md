@@ -56,14 +56,20 @@ The installer selects EJA for the next LightDM start. It does not restart
 LightDM automatically, so the current session is not interrupted:
 
 ```sh
-pkexec "$PWD/integration/lightdm-webkit-greeter/install.sh"
+./install.sh
 ```
 
-Save work before logging out or rebooting. If EJA does not appear or login
-fails, switch to a text console with `Ctrl+Alt+F2`, log in, then run:
+The root-level script locates this integration automatically and requests
+administrator access. From another working directory, invoke the root-level
+`install.sh` by its full path. The script does not change the working
+directory, so use the same path for rollback. Save your work before logging
+out or rebooting.
+
+If EJA does not appear or login fails, switch to a text console with
+`Ctrl+Alt+F2`, log in, then run:
 
 ```sh
-pkexec "$HOME/projects/eja-login/integration/lightdm-webkit-greeter/uninstall.sh"
+"$HOME/projects/GREETA/uninstall.sh"
 sudo reboot
 ```
 
