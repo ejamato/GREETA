@@ -51,6 +51,8 @@ density, wind, and selected Pixel Mates can be customized.
 
 The demo is a static GitHub Pages preview. Login, session start, and power
 actions are unavailable outside a real LightDM greeter.
+GitHub Pages publishes the `main` branch directly; the repository's Pages
+source is configured to use the root of that branch.
 
 To run the interface locally:
 
