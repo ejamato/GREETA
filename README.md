@@ -94,6 +94,15 @@ Install EJA for the **next LightDM start**:
 pkexec "$PWD/integration/lightdm-webkit-greeter/install.sh"
 ```
 
+You can run the installer from any working directory by using its full path:
+
+```sh
+pkexec "$HOME/projects/eja-login/integration/lightdm-webkit-greeter/install.sh"
+```
+
+If you cloned GREETA to a different location, replace that path with the
+location of your `install.sh`.
+
 The installer does not restart LightDM. Save your work before logging out or
 restarting. If you need to roll back, use a text console and run:
 
